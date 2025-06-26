@@ -80,7 +80,7 @@ export default {
 
 
 <style scoped>
-.pustinja {
+.desert {
   position: relative;
   top: -640px;
   right: -300px;
@@ -96,7 +96,7 @@ export default {
   height: 40px;
   transition: filter 0.2s;
 }
-.selo {
+.village {
   position: relative;
   top: -450px;
   right: -400px;
