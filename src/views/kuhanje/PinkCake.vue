@@ -1,7 +1,7 @@
 <template>
   <div class="kuhanje">
     <div class="form">
-      <h1>Vegetable Medley</h1>
+      <h1>Pink Cake</h1>
       <div class="uz_sliku">
           <img src="@/assets/pink_cake.png" class="slika" alt="pinkcake"/>
 
