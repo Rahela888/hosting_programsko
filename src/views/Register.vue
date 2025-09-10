@@ -120,24 +120,98 @@ padding: 40px;
 </style>
 
 <script>
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '@/firebase.js'
 
 export default {
   data() {
     return {
-
       username: '',
-      email:'',
+      email: '',
       password: '',
-      errorMessage: ''
+      confirmPassword: '',  // dodaj ovo za potvrdu passworda
+      errorMessage: '',
+      successMessage: '',
+      loading: false
     }
   },
   methods: {
-    do_login() {
-      if (!this.username || !this.password) {
-        this.errorMessage = 'Please fill in all boxses!';
-      } else {
-        this.errorMessage = '';
-        this.$router.push('/login');
+    async do_login() {
+      // Resetuj poruke
+      this.errorMessage = '';
+      this.successMessage = '';
+      
+      // Provjeri da li su sva polja popunjena
+      if (!this.username || !this.email || !this.password) {
+        this.errorMessage = 'Please fill in all boxes!';
+        return;
+      }
+      
+      // Provjeri email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(this.email)) {
+        this.errorMessage = 'Please enter a valid email address!';
+        return;
+      }
+      
+      // Provjeri password duljinu
+      if (this.password.length < 6) {
+        this.errorMessage = 'Password must be at least 6 characters long!';
+        return;
+      }
+      
+      // Provjeri potvrdu passworda (ako imaš confirmPassword field)
+      if (this.confirmPassword && this.password !== this.confirmPassword) {
+        this.errorMessage = 'Passwords do not match!';
+        return;
+      }
+      
+      this.loading = true;
+      
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth, 
+          this.email, 
+          this.password
+        );
+        
+        const user = userCredential.user;
+        console.log('User registered:', user);
+        
+   
+        localStorage.setItem('user', JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          username: this.username
+        }));
+        
+        this.successMessage = 'Account created successfully!';
+        
+        setTimeout(() => {
+          this.$router.push('/login');
+        }, 2000);
+        
+      } catch (error) {
+        console.error('Registration error:', error);
+      
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            this.errorMessage = 'This email is already registered!';
+            break;
+          case 'auth/invalid-email':
+            this.errorMessage = 'Please enter a valid email address!';
+            break;
+          case 'auth/weak-password':
+            this.errorMessage = 'Password is too weak! Use at least 6 characters.';
+            break;
+          case 'auth/operation-not-allowed':
+            this.errorMessage = 'Email registration is not enabled!';
+            break;
+          default:
+            this.errorMessage = 'Registration failed. Please try again!';
+        }
+      } finally {
+        this.loading = false;
       }
     }
   }
