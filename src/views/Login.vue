@@ -121,26 +121,72 @@ padding: 40px;
 
 
 <script>
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '@/firebase.js'
 
 export default {
   data() {
     return {
-      username: '',
+      username: '',  // ovo će biti email
       password: '',
-      errorMessage: ''
+      errorMessage: '',
+      loading: false
     }
   },
   methods: {
-    do_manage() {
+    async do_manage() {
+      this.errorMessage = '';
       if (!this.username || !this.password) {
-        this.errorMessage = 'Please fill in both username and password!';
-      } else {
-        this.errorMessage = '';
+        this.errorMessage = 'Please fill in both email and password!';
+        return;
+      }
+
+      this.loading = true;
+      
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth, 
+          this.username,  // koristiš username kao email
+          this.password
+        );
+        
+        const user = userCredential.user;
+        console.log('User logged in:', user);
+        
+        // Spremi user podatke u localStorage
+        localStorage.setItem('user', JSON.stringify({
+          uid: user.uid,
+          email: user.email
+        }));
+
         this.$router.push('/manag');
+        
+      } catch (error) {
+        console.error('Login error:', error);
+        
+        switch (error.code) {
+          case 'auth/user-not-found':
+            this.errorMessage = 'No account found with this email!';
+            break;
+          case 'auth/wrong-password':
+            this.errorMessage = 'Incorrect password!';
+            break;
+          case 'auth/invalid-email':
+            this.errorMessage = 'Please enter a valid email address!';
+            break;
+          case 'auth/too-many-requests':
+            this.errorMessage = 'Too many failed attempts. Try again later!';
+            break;
+          default:
+            this.errorMessage = 'Login failed. Please try again!';
+        }
+      } finally {
+        this.loading = false;
       }
     }
   }
 }
 </script>
+
 
 
