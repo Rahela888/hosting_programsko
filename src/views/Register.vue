@@ -132,8 +132,7 @@ export default {
       username: '',
       email: '',
       password: '',
-      errorMessage: '',
-      successMessage: '',
+     
       loading: false
     }
   },
@@ -149,12 +148,7 @@ export default {
         return;
       }
       
-      // Provjeri email format
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(this.email)) {
-        this.errorMessage = 'Please enter a valid email address!';
-        return;
-      }
+     
       
       
       this.loading = true;
@@ -176,7 +170,7 @@ export default {
           username: this.username
         }));
         
-        this.successMessage = 'Account created successfully!';
+        this.successMessage = 'Sve je dobro prošlo!!';
         
         setTimeout(() => {
           this.$router.push('/login');
@@ -185,22 +179,7 @@ export default {
       } catch (error) {
         console.error('Registration error:', error);
       
-        switch (error.code) {
-          case 'auth/email-already-in-use':
-            this.errorMessage = 'This email is already registered!';
-            break;
-          case 'auth/invalid-email':
-            this.errorMessage = 'Please enter a valid email address!';
-            break;
-          case 'auth/weak-password':
-            this.errorMessage = 'Password is too weak! Use at least 6 characters.';
-            break;
-          case 'auth/operation-not-allowed':
-            this.errorMessage = 'Email registration is not enabled!';
-            break;
-          default:
-            this.errorMessage = 'Registration failed. Please try again!';
-        }
+     
       } finally {
         this.loading = false;
       }
@@ -208,6 +187,7 @@ export default {
   }
 }
 </script>
+
 
 
 
