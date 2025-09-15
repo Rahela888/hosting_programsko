@@ -4,8 +4,7 @@
      <div class="form">
     <h1>Register</h1>
     <br/>
-   <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-<div v-if="successMessage" class="success-message">{{ successMessage }}</div>
+  
 
 
     <label for="username"></label>
@@ -170,7 +169,7 @@ export default {
           username: this.username
         }));
         
-        this.successMessage = 'Sve je dobro prošlo!!';
+     
         
         setTimeout(() => {
           this.$router.push('/login');
@@ -187,6 +186,7 @@ export default {
   }
 }
 </script>
+
 
 
 
