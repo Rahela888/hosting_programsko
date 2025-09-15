@@ -129,7 +129,6 @@ export default {
       username: '',
       email: '',
       password: '',
-      confirmPassword: '',  // dodaj ovo za potvrdu passworda
       errorMessage: '',
       successMessage: '',
       loading: false
@@ -154,17 +153,6 @@ export default {
         return;
       }
       
-      // Provjeri password duljinu
-      if (this.password.length < 6) {
-        this.errorMessage = 'Password must be at least 6 characters long!';
-        return;
-      }
-      
-      // Provjeri potvrdu passworda (ako imaš confirmPassword field)
-      if (this.confirmPassword && this.password !== this.confirmPassword) {
-        this.errorMessage = 'Passwords do not match!';
-        return;
-      }
       
       this.loading = true;
       
@@ -217,4 +205,5 @@ export default {
   }
 }
 </script>
+
 
