@@ -136,56 +136,32 @@ export default {
     }
   },
   methods: {
-    async do_login() {
-      // Resetuj poruke
-      this.errorMessage = '';
-      this.successMessage = '';
-      
-      // Provjeri da li su sva polja popunjena
-      if (!this.username || !this.email || !this.password) {
-        this.errorMessage = 'Please fill in all boxes!';
-        return;
-      }
-      
-     
-      
-      
-      this.loading = true;
-      
-      try {
-        const userCredential = await createUserWithEmailAndPassword(
-          auth, 
-          this.email, 
-          this.password
-        );
-        
-        const user = userCredential.user;
-        console.log('User registered:', user);
-        
-   
-        localStorage.setItem('user', JSON.stringify({
-          uid: user.uid,
-          email: user.email,
-          username: this.username
-        }));
-        
-     
-        
-        setTimeout(() => {
-          this.$router.push('/login');
-        }, 2000);
-        
-      } catch (error) {
-        console.error('Registration error:', error);
-      
-     
-      } finally {
-        this.loading = false;
-      }
-    }
+async do_login() {
+  this.loading = true;
+  
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
+    const user = userCredential.user;
+    
+    localStorage.setItem('user', JSON.stringify({
+      uid: user.uid,
+      email: user.email,
+      username: this.username
+    }));
+    
+    this.$router.push('/login');
+    
+  } catch (error) {
+    console.error('Registration error:', error);
+  } finally {
+    this.loading = false;
+  }
+}
+
   }
 }
 </script>
+
 
 
 
