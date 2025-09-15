@@ -5,21 +5,18 @@
     <h1>Register</h1>
     <br/>
   
-
-
-    <label for="username">Username</label>
     <input type="text" id="username" name="username" placeholder="Enter your username" required  v-model="username"/>
 
     <br />
     <br/>
 
-    <label for="email">Email</label>
+  
     <input type="email" id="email" name="email" placeholder="Enter your email" required  v-model="email"/>
 
     <br />
     <br />
 
-    <label for="password">Password</label>
+   
     <input type="password" id="password" name="password" placeholder="Input your password" required v-model="password" />
 
     <br />
@@ -191,6 +188,7 @@ export default {
   }
 }
 </script>
+
 
 
 
