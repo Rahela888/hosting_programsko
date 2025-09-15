@@ -82,7 +82,7 @@ input[type="text"] {
 background-color: #CD9149;
 border-radius: 10px ;
 text-align: center;
-color:974805;
+color: #974805;
 width: 600px;
 padding: 40px;
 }
@@ -90,7 +90,7 @@ input[type="password"] {
 background-color: #CD9149;
 border-radius: 10px ;
 text-align: center;
-color:974805;
+color: #974805;
 width: 600px;
 padding: 40px;
 }
@@ -111,7 +111,7 @@ input[type="email"] {
 background-color: #CD9149;
 border-radius: 10px ;
 text-align: center; 
-color:974805;
+color: #974805;
 width: 600px;
 padding: 40px;
 
@@ -217,3 +217,4 @@ export default {
   }
 }
 </script>
+
