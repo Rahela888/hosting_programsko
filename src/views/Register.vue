@@ -62,8 +62,8 @@ h1{
 .form{
  background-color:#FFAB56;
   border-radius: 20px;
-  padding: 330px;
-  width: 500px;
+   padding: 40px;    
+  width: 700px; 
   margin:auto ;
   margin-bottom:50px;
   background-position: center;
@@ -85,8 +85,9 @@ background-color: #CD9149;
 border-radius: 10px ;
 text-align: center;
 color: #974805;
-width: 600px;
-padding: 40px;
+  width: 400px;      
+  padding: 20px;      
+  border: none; 
 }
 input[type="password"] {
 background-color: #CD9149;
@@ -161,6 +162,7 @@ async do_login() {
   }
 }
 </script>
+
 
 
 
