@@ -4,6 +4,9 @@
      <div class="form">
     <h1>Register</h1>
     <br/>
+   <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+<div v-if="successMessage" class="success-message">{{ successMessage }}</div>
+
 
     <label for="username"></label>
     <input type="text" id="username" name="username" placeholder="Enter your username" required  v-model="username"/>
@@ -205,5 +208,6 @@ export default {
   }
 }
 </script>
+
 
 
