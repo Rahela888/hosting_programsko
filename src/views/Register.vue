@@ -132,36 +132,66 @@ export default {
       username: '',
       email: '',
       password: '',
-     
       loading: false
     }
   },
   methods: {
-async do_login() {
-  this.loading = true;
-  
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
-    const user = userCredential.user;
-    
-    localStorage.setItem('user', JSON.stringify({
-      uid: user.uid,
-      email: user.email,
-      username: this.username
-    }));
-    
-    this.$router.push('/login');
-    
-  } catch (error) {
-    console.error('Registration error:', error);
-  } finally {
-    this.loading = false;
-  }
-}
+    async do_login() {
+      if (!this.username?.trim()) {
+        alert('Please enter username!');
+        return;
+      }
 
+      if (!this.email?.trim()) {
+        alert('Please enter email!');
+        return;
+      }
+
+      if (!this.password?.trim()) {
+        alert('Please enter password!');
+        return;
+      }
+
+      this.loading = true;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth, 
+          this.email.trim(), 
+          this.password
+        );
+        
+        const user = userCredential.user;
+
+        localStorage.setItem('user', JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          username: this.username.trim()
+        }));
+
+        this.$router.push('/login');
+
+      } catch (error) {
+        let errorMsg = 'Registration failed!';
+        
+        if (error.code === 'auth/email-already-in-use') {
+          errorMsg = 'This email is already registered!';
+        } else if (error.code === 'auth/invalid-email') {
+          errorMsg = 'Please enter a valid email!';
+        } else if (error.code === 'auth/weak-password') {
+          errorMsg = 'Password must be at least 6 characters!';
+        }
+        
+        alert(errorMsg);
+
+      } finally {
+        this.loading = false;
+      }
+    }
   }
 }
 </script>
+
 
 
 
