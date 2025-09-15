@@ -3,24 +3,11 @@
 <div class="register">
      <div class="form">
     <h1>Register</h1>
-    <br/>
   
-    <input type="text" id="username" name="username" placeholder="Enter your username" required  v-model="username"/>
+  <input v-model="username" />
+<input v-model="email" />  
+<input v-model="password" />
 
-    <br />
-    <br/>
-
-  
-    <input type="email" id="email" name="email" placeholder="Enter your email" required  v-model="email"/>
-
-    <br />
-    <br />
-
-   
-    <input type="password" id="password" name="password" placeholder="Input your password" required v-model="password" />
-
-    <br />
-    <br />
 <div class="gumb">
     <button type="submit" @click="do_login">Submit</button>
 </div>
@@ -188,6 +175,7 @@ export default {
   }
 }
 </script>
+
 
 
 
